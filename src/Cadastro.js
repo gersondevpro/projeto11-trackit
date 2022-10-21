@@ -1,38 +1,59 @@
 import styled from "styled-components"
 import logo from "./assets/img/logo.png"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { useState } from "react"
+import axios from "axios"
 
 export default function Cadastro() {
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [name, setName] = useState("")
+    const [photo, setPhoto] = useState("")
+    const navigate = useNavigate()
+    
+    function addNewUser(event) {
+        event.preventDefault()
+
+        const request = {
+            email,
+            name,
+            password,
+            image: photo
+        }
+
+        const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/sign-up", request)
+
+        promise.then(() => {
+            navigate("/")
+        })
+
+        promise.catch((err) => {
+            console.log(err.response.data.mensagem)
+        })
+    }
+    
     return (
         <StyledScreen>
             <img src={logo}/>
-            <StyledForm>
+            <StyledForm onSubmit={addNewUser}>
                 <StyledPlaceholder> {/* email */}
                     <label forhtml="email"></label>
-                    <input id="email" name="email" type="email" placeholder="e-mail"
-                        onChange={e => (e.target.value)}
-                        required
+                    <input id="email" name="email" type="email" placeholder="e-mail" onChange={e => setEmail(e.target.value)} required
                     />
                 </StyledPlaceholder>
                 <StyledPlaceholder> {/* password */}
                     <label forhtml="password"></label>
-                    <input id="password" name="password" type="password" placeholder="senha"
-                        onChange={e => (e.target.value)}
-                        required
+                    <input id="password" name="password" type="password" placeholder="senha" onChange={e => setPassword(e.target.value)} required
                     />
                 </StyledPlaceholder>
                 <StyledPlaceholder> {/* name */}
                     <label forhtml="name"></label>
-                    <input id="name" name="name" type="text" placeholder="nome"
-                        onChange={e => (e.target.value)}
-                        required
+                    <input id="name" name="name" type="text" placeholder="nome" onChange={e => setName(e.target.value)} required
                     />
                 </StyledPlaceholder>
                 <StyledPlaceholder> {/* photo */}
                     <label forhtml="photo"></label>
-                    <input id="photo" name="photo" type="url" placeholder="foto"
-                        onChange={e => (e.target.value)}
-                        required
+                    <input id="photo" name="photo" type="url" placeholder="foto" onChange={e => setPhoto(e.target.value)} required
                     />
                 </StyledPlaceholder>
                 <button type="submit">Cadastrar</button>

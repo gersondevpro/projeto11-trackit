@@ -1,23 +1,48 @@
 import styled from "styled-components"
 import logo from "./assets/img/logo.png"
-import { Link } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
+import { useState } from "react"
+import axios from "axios"
 
 export default function Initial() {
+    const [userEmail, setUserEmail] = useState("")
+    const [userPassword, setUserPassword] = useState("")
+    const navigate = useNavigate()
+
+    function login(event) {
+        event.preventDefault()
+
+        const request = {
+            email: userEmail,
+            password: userPassword
+        }
+
+        const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", request)
+
+        promise.then(() => {
+            navigate("/habitos")
+        })
+
+        promise.catch((err) => {
+            console.log(err.response.data.mensagem)
+        })
+    }
+
     return (
         <StyledScreen>
             <img src={logo} />
-            <StyledForm>
+            <StyledForm onSubmit={login}>
                 <StyledPlaceholder> {/* email */}
                     <label forhtml="email"></label>
                     <input id="email" name="email" type="email" placeholder="e-mail"
-                        onChange={e => (e.target.value)}
+                        onChange={e => setUserEmail(e.target.value)}
                         required
                     />
                 </StyledPlaceholder>
                 <StyledPlaceholder> {/* password */}
                     <label forhtml="password"></label>
                     <input id="password" name="password" type="password" placeholder="senha"
-                        onChange={e => (e.target.value)}
+                        onChange={e => setUserPassword(e.target.value)}
                         required
                     />
                 </StyledPlaceholder>
