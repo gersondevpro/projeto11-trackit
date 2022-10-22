@@ -28,7 +28,7 @@ export default function Cadastro() {
         })
 
         promise.catch((err) => {
-            console.log(err.response.data.mensagem)
+            console.log(err.response.data.message)
         })
     }
     

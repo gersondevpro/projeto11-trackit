@@ -1,7 +1,7 @@
 import styled from "styled-components"
 import logo from "./assets/img/logo.png"
 import { Link, useNavigate } from "react-router-dom"
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import axios from "axios"
 
 export default function Initial() {
@@ -20,11 +20,11 @@ export default function Initial() {
         const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", request)
 
         promise.then(() => {
-            navigate("/habitos")
+            navigate("/hoje")
         })
 
         promise.catch((err) => {
-            console.log(err.response.data.mensagem)
+            alert(err.response.data.message)
         })
     }
 

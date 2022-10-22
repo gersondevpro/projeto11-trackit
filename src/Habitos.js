@@ -1,7 +1,11 @@
 import { Link } from "react-router-dom"
 import styled from "styled-components"
+import AddHabito from "./AddHabito"
+import HabitoList from "./HabitoList"
 
 export default function Habitos() {
+    const week = ["D", "S", "T", "Q", "Q", "S", "S"]
+
     return (
         <StyledScreen>
             <StyledNavbar>
@@ -14,7 +18,12 @@ export default function Habitos() {
                 <div><p>+</p></div>
             </StyledHabits>
 
+            <AddHabito week={week}/>
+
+            <HabitoList/>
+            
             <StyledText>Você não tem nenhum hábito cadastrado ainda. Adicione um hábito para começar a trackear!</StyledText>
+
 
             <StyledFooter>
                 <h4>Hábitos</h4>
@@ -35,7 +44,6 @@ const StyledScreen = styled.div`
     position: relative;
     background-color: #F2F2F2;
 `
-
 const StyledNavbar = styled.nav`
     width: 100vw;
     height: 70px;
@@ -46,6 +54,7 @@ const StyledNavbar = styled.nav`
     position: fixed;
     top: 0;
     z-index: 1;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
     h1 {
         font-family: 'Playball', cursive;
         font-size: 39px;
@@ -59,7 +68,6 @@ const StyledNavbar = styled.nav`
         margin-right: 18px;
     }
 `
-
 const StyledHabits = styled.div`
     box-sizing: border-box;
     font-family: 'Lexend Deca', sans-serif;
@@ -87,7 +95,6 @@ const StyledHabits = styled.div`
         }
     }
 `
-
 const StyledText = styled.h3`
     box-sizing: border-box;
     font-family: 'Lexend Deca', sans-serif;
@@ -97,7 +104,6 @@ const StyledText = styled.h3`
     padding: 0px 18px;
     line-height: 22px;
 `
-
 const StyledFooter = styled.footer`
     box-sizing: border-box;
     width: 100vw;
