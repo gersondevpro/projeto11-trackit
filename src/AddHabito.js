@@ -3,10 +3,10 @@ import styled from "styled-components"
 
 export default function AddHabito({week}) {
     console.log(week)
-    const [checkDay, setCheckDay] = useState([])
 
-    function selectDay(indexDay) {
-        console.log(indexDay)
+
+    function selectDay(v) {
+        console.log(v)
     }
 
     return (
@@ -17,12 +17,12 @@ export default function AddHabito({week}) {
                 />
             </section>
             <StyledWeekDays>
-                {week.map((day, i) =>
+                {week.map((value, i) =>
                     <StyledInputsDays
                         key={i}
-                        onClick={() => selectDay(i + 1)}
+                        onClick={() => selectDay(value)}
                         > 
-                        <p>{day}</p>
+                        <p>{value.day}</p>
                     </StyledInputsDays>)}
             </StyledWeekDays>
             <StyledSaveAndCancel>

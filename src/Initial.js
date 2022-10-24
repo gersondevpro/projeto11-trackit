@@ -1,16 +1,22 @@
 import styled from "styled-components"
 import logo from "./assets/img/logo.png"
 import { Link, useNavigate } from "react-router-dom"
-import { useState, useEffect } from "react"
+import { useState, useEffect, useContext } from "react"
 import axios from "axios"
+import Variable from "./context/UseContext"
+import { ThreeDots } from 'react-loader-spinner'
 
 export default function Initial() {
     const [userEmail, setUserEmail] = useState("")
     const [userPassword, setUserPassword] = useState("")
+    const [loading, setLoading] = useState(false)
+    const {setUser, user} = useContext(Variable)
     const navigate = useNavigate()
 
     function login(event) {
         event.preventDefault()
+
+        setLoading(true)
 
         const request = {
             email: userEmail,
@@ -19,15 +25,16 @@ export default function Initial() {
 
         const promise = axios.post("https://mock-api.bootcamp.respondeai.com.br/api/v2/trackit/auth/login", request)
 
-        promise.then(() => {
+        promise.then((res) => {
+            setUser(res.data)
             navigate("/hoje")
         })
 
         promise.catch((err) => {
             alert(err.response.data.message)
+            setLoading(false)
         })
     }
-
     return (
         <StyledScreen>
             <img src={logo} />
@@ -46,7 +53,17 @@ export default function Initial() {
                         required
                     />
                 </StyledPlaceholder>
-                <button type="submit">Entrar</button>
+                <button type="submit">{loading === false ? "Entrar" :
+                <ThreeDots
+                height="50" 
+                width="50" 
+                radius="9"
+                color="#FFFFFF" 
+                ariaLabel="three-dots-loading"
+                wrapperStyle={{}}
+                wrapperClassName=""
+                visible={true}
+                />}</button>
             </StyledForm>
             <Link to={`/cadastro`}><p>Não tem uma conta? Cadastre-se!</p></Link>
         </StyledScreen>
@@ -77,6 +94,9 @@ const StyledForm = styled.form`
         font-size: 20px;
         border: none;
         border-radius: 5px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
     }
 `
 const StyledPlaceholder = styled.div`

@@ -1,16 +1,27 @@
+import { useContext } from "react"
 import { Link } from "react-router-dom"
 import styled from "styled-components"
 import AddHabito from "./AddHabito"
 import HabitoList from "./HabitoList"
+import Variable from "./context/UseContext"
 
 export default function Habitos() {
-    const week = ["D", "S", "T", "Q", "Q", "S", "S"]
+    const {user} = useContext(Variable)
+    const week = [
+        {day: "D", color: false},
+        {day: "S", color: false},
+        {day: "T", color: false},
+        {day: "Q", color: false},
+        {day: "Q", color: false},
+        {day: "S", color: false},
+        {day: "S", color: false}
+    ]
 
     return (
         <StyledScreen>
             <StyledNavbar>
                 <h1>TrackIt</h1>
-                <img src="https://yt3.ggpht.com/ytc/AMLnZu9tYPIG3bxki2LZz-NRrvHtLHRL0-wW95Cjgcr2=s900-c-k-c0x00ffffff-no-rj"/>
+                <img src={user.image}/>
             </StyledNavbar>
 
             <StyledHabits>

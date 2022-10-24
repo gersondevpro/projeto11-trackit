@@ -1,12 +1,15 @@
+import { useContext } from "react"
 import { Link } from "react-router-dom"
 import styled from "styled-components"
+import Variable from "./context/UseContext"
 
 export default function Hoje() {
+    const {user} = useContext(Variable)
     return (
         <StyledScreen>
             <StyledNavbar>
                 <h1>TrackIt</h1>
-                <img src="https://yt3.ggpht.com/ytc/AMLnZu9tYPIG3bxki2LZz-NRrvHtLHRL0-wW95Cjgcr2=s900-c-k-c0x00ffffff-no-rj"/>
+                <img src={user.image}/>
             </StyledNavbar>
             <StyledFooter>
                 <Link to={`/habitos`} style={{ textDecoration: 'none' }}>
